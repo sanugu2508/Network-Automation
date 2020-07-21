@@ -1,0 +1,73 @@
+
+<html>
+<link rel="stylesheet" media="screen" href = "{{url_for('static', filename='bootstrap.min.css')}}">
+      <b>Tools for Motiva IT Security</b><br>
+       <a href="http://localhost:8000/">Network Tools Home Page</a><br>
+       <a href="http://localhost:8000/check_vyatta_access">Access Check in Motiva Vyatta Firewall</a><br>
+       <a href="http://localhost:8000/check_asa_access">Access Check in Motiva ASA Firewalls</a><br>
+       <a href="http://localhost:8000/vlan_find">Check VLAN Details</a><br>
+
+
+{% block main %}
+
+<script type="text/javascript">
+function showMe (it, box) {
+var vis = (box.checked) ? "block" : "none";
+document.getElementById(it).style.display = vis;
+}
+</script>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <h1>Check Access in Vyatta</h1>
+      <hr>
+
+      <form action="/check_vyatta_access" method="POST">
+      <div class="form-group">
+     <label>Source IP Address</label><br>
+     <input type="text"  id="sourceip" name="sourceip" placeholder="Source IP Address" width="40" required>
+     </div>
+
+     <div class="form-group">
+     <label>Destination IP Address</label><br>
+     <input type="text"  id="destinationip" name="destinationip" placeholder="Destination IP Address" width="40" required>
+     </div>
+     <b> Access is verified on offline copy from {{ modified }}. for realtime access check, select check mark below and enter credentials. </b>
+    <div class="form-group">
+     
+    Realtime. <input type="checkbox" id="realtime" name="realtime" value="True" unchecked onclick="showMe('div1', this)"><br><br>
+
+        <div id="div1" style="display:none">
+            <div class="form-group">
+            <label>Username</label><br>
+            <input type="text"  id="username" name="username" placeholder="username" width="40" >
+            </div>
+
+            <div class="form-group">
+            <label>Password</label><br>
+            <input type="password"  id="password" name="password" placeholder="password" width="40" >
+            </div>
+  
+        </div>
+    </div>
+<div>
+     <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+
+
+
+</form>
+
+
+<h1>Results will be displayed here</h1>
+
+{%for i in output%} 
+  
+    {{i}}<br>
+{%endfor%} 
+
+{% endblock %}
+</html>
+
